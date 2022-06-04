@@ -16,8 +16,7 @@ type Song struct {
 func main() {
     fmt.Println("Hello World!")
     fileContents := readFile()
-    firstSong := parseSong(fileContents[0])
-    fmt.Println(firstSong)
+    fmt.Println(parseSongs(fileContents))
 }
 
 func readFile() []string {
@@ -34,6 +33,14 @@ func readFile() []string {
     lines = append(lines, scanner.Text())
   }
   return lines
+}
+
+func parseSongs(lines []string) []Song {
+  var songs = make([]Song, len(lines))
+  for i := 0; i < len(lines); i++ {
+    songs[i] = parseSong(lines[i])
+  }
+  return songs
 }
 
 func parseSong(line string) Song {
