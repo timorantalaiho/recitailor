@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	perm "github.com/gitchander/permutation"
 	"os"
 	"strconv"
 	"strings"
@@ -13,10 +14,20 @@ type Song struct {
 	durationSeconds int
 }
 
+type SongSlice []Song
+
+func (ss SongSlice) Len() int      { return len(ss) }
+func (ss SongSlice) Swap(i, j int) { ss[i], ss[j] = ss[j], ss[i] }
+
 func main() {
-	fmt.Println("Hello World!")
 	fileContents := readFile()
-	fmt.Println(parseSongs(fileContents))
+
+	songs := parseSongs(fileContents)
+
+	permutations := perm.New(SongSlice(songs))
+	for permutations.Next() {
+		fmt.Println(songs)
+	}
 }
 
 func readFile() []string {
